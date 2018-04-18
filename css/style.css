@@ -1,0 +1,31 @@
+#gameCanvas {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  background: url("../images/castle_entrance.png");
+  /* height: 690px; */
+  /* width: 800px; */
+  /* background-size: contain; */
+  background-repeat: no-repeat;
+  }
+
+
+  body button {
+    font-size: 20px;
+    background-color: #870007;
+    color: #fff;
+    padding: 20px 40px;
+    border: 0;
+    box-shadow: 0;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+
+  .col-4{
+    float: none;
+    display: block;
+    margin: 0 auto;
+    padding-top: 300px;
+} 
