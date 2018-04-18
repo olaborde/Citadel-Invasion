@@ -3,7 +3,13 @@ window.onload = function() {
   var ctx  = canvas.getContext('2d');
   var ctx2  = canvas.getContext('2d');
   var characterImage = new Image();
+  var dragonImage = new Image();
   var characterWidth = 50;
+  dragonImage.src = './images/realdrag.gif';
+  
+  // drawDragon();
+
+
 
 
   stop = function() {
@@ -13,7 +19,7 @@ window.onload = function() {
   
 
   function interval(){
-                          // |====> milliseconds
+                        
     setInterval(updateCanvas, 50);
   }
 
@@ -34,17 +40,29 @@ window.onload = function() {
   // }
 
   function startGame() {
-    drawCharacter()
+    drawCharacter();  
+    
     // setInterval(draw,140 );
      
   }
+
+//   var dragon = {
+//     x: 220,
+//     y: 515,
+//     dWidth: 50,
+//     dHeight: 85,
+    
+// }
+
+
+
 
 
   var character = {
     x: 220,
     y: 515,
-    characterWidth: 50,
-    characterHeight: 85,
+    characterWidth: 100,
+    characterHeight: 125,
     // defined function to move characters
     moveLeft: function(){
       console.log("x in moveLeft before", this.x);
@@ -87,20 +105,29 @@ window.onload = function() {
   console.log("the caracter is: ", character)
 
   function drawCharacter(){
+
     characterImage.src = './images/ninja.jpg';
+    // dragonImage.src = 'hello';
   // characterImage.onload = function(){
     // change character.characterWidth to simply character to be use for collision detection
     ctx.drawImage(characterImage, character.x, character.y, characterWidth, character.characterHeight);
+    ctx.drawImage(dragonImage, 350, 200);
+
+    // next three lines regulate score
+    ctx.fillStyle="green";
+    ctx.font = "50px Helvetica";
+    ctx.fillText("Score: " + board.score, 0, 50);
+    
+  }
+
+  // function drawDragon(){
+  //   // characterImage.src = './images/ninja.jpg';
+  //   dragonImage.src = '../images/realdrag.gif';
+ 
+  //   ctx2.drawImage(dragonImage, dragon.x, dragon.y, dragon.dWidth, dragon.dHeight);
   // }
 
-//   if(x + dx > canvas.width-characterWidth || x + dx < characterWidth) {
-//     dx = -dx;
-// }
-// if(y + dy > canvas.height-characterWidth || y + dy < characterWidth) {
-//     dy = -dy;
-// }
 
-  }
 
   // define variable myObstacle as an empty array
   var myObstacles = [];
@@ -126,6 +153,8 @@ window.onload = function() {
       default:
       console.log("blah");
     }
+    for(var i = 0; i < myObstacles.length; i++){
+      myObstacles[i].update();}
   }
 
 
@@ -176,6 +205,7 @@ var dy = 2;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
       drawCharacter();
+      // drawDragon();
     
     ctx.beginPath();
     // ctx.arc(x, y, 10, 0, Math.PI*2);
@@ -199,8 +229,26 @@ var dy = 2;
       this.x += this.speedX;
       this.y += this.speedY;
     }
+    // next 4 lines check the position of the obstacle
+    this.left = function() { 
+      return this.x 
+    };
+    this.right = function() { 
+      return this.x + this.width 
+    };
+    this.top = function() { 
+      return this.y 
+    };
+    this.bottom = function() { 
+      return this.y + (this.height) 
+    };
 
-    
+    // Then we need to create a function that checks if the position of the car is not the same as the obstacle´s one.
+    this.crashWith = function(obstacle) {
+      return !(((character.y) > obstacle.bottom()) ||
+               ((character.x + 40) < obstacle.left()) ||
+               ((character.x + 40) > obstacle.right()))
+    }
 
 
 
@@ -208,11 +256,21 @@ var dy = 2;
 
   }// end of component function
 
+   // next three lines regulate score
+   function score(){
+
+     this.ctx.fillStyle="pink";
+     this.ctx.font = "50px Helvetica";
+     this.ctx.fillText("Score: " + board.score, 0, 50);
+
+   }
+
 
   // 5th step => update canvas:
   function updateCanvas(){
     ctx.clearRect(0,0,500,600);
     drawCharacter();
+    // drawDragon();
     // Every time we call updateCanvas() we will add 1 to our frames variable
     board.frames ++;
     // Every 60 times we update the canvas, a new obstacle will be created. 
@@ -232,6 +290,18 @@ var dy = 2;
       // this line allows moving of the obstacles (without this line we just get first obstacle at the position 0)
       myObstacles[i].y += 10;
       myObstacles[i].update();
+      if(myObstacles[i].crashWith(myObstacles[i]) === true){
+        console.log("crash")
+        alert("Ouch!");
+        myObstacles = [];
+        board.score = 0;
+        board.frames = 0;
+        startGame();
+      }
+      if(myObstacles[i].y > 600){
+        myObstacles.splice(i,1);
+        board.score++;
+      }
     }
   }
 };
