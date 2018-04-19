@@ -3,9 +3,9 @@ window.onload = function() {
   var ctx  = canvas.getContext('2d');
   var ctx2  = canvas.getContext('2d');
   var characterImage = new Image();
-  var dragonImage = new Image();
+  // var dragonImage = new Image();
   var characterWidth = 50;
-  dragonImage.src = './images/realdrag.gif';
+  // dragonImage.src = './images/realdrag.gif';
   
   // drawDragon();
 
@@ -107,30 +107,20 @@ window.onload = function() {
   function drawCharacter(){
 
     characterImage.src = './images/ninja.jpg';
-    // dragonImage.src = 'hello';
-  // characterImage.onload = function(){
-    // change character.characterWidth to simply character to be use for collision detection
-    ctx.drawImage(characterImage, character.x, character.y, characterWidth, character.characterHeight);
-    ctx.drawImage(dragonImage, 350, 200);
 
-    // next three lines regulate score
+    ctx.drawImage(characterImage, character.x, character.y, characterWidth, character.characterHeight);
+  
     ctx.fillStyle="green";
     ctx.font = "50px Helvetica";
     ctx.fillText("Score: " + board.score, 0, 50);
     
   }
 
-  // function drawDragon(){
-  //   // characterImage.src = './images/ninja.jpg';
-  //   dragonImage.src = '../images/realdrag.gif';
- 
-  //   ctx2.drawImage(dragonImage, dragon.x, dragon.y, dragon.dWidth, dragon.dHeight);
-  // }
-
-
 
   // define variable myObstacle as an empty array
   var myObstacles = [];
+  // an array to add a bunch of dragon
+  var myDragons = [];
   
   // 3rd => makecharacter  moving
   document.onkeydown = function(e){
@@ -159,24 +149,13 @@ window.onload = function() {
 
 
 
-//start location for x and y
-var x = 400; //= canvas.width/3;
-var y = 80; //= canvas.height-30;
-var dx = +2;
-var dy = 2;
+// //start location for x and y
+// var x = 400; //= canvas.width/3;
+// var y = 80; //= canvas.height-30;
+// var dx = +2;
+// var dy = 2;
 
-// function draw() {
-//   ctx.clearRect(0, 0, canvas.width, canvas.height);
-//   drawCharacter();
 
-// ctx.beginPath();
-// ctx.arc(x, y, 10, 0, Math.PI*2);
-// ctx.fillStyle = "red";
-// ctx.fill();
-// ctx.closePath();
-// x += dx;
-// y += dy;
-// }
 
   // var score = 0;
   var board = {
@@ -208,15 +187,21 @@ var dy = 2;
       // drawDragon();
     
     ctx.beginPath();
-    // ctx.arc(x, y, 10, 0, Math.PI*2);
-    // ctx.fillStyle = "red";
-    // ctx.fill();
-    // ctx.closePath();
-    // x += dx;
-    // y += dy;
+      
+      function dragonFly(){
 
-
-
+        var dragon = {
+          x: 350,
+          y: 200,
+          dWidth: 100,
+          dHeight: 125,
+        }
+        var dragonImage = new Image();
+        dragonImage.src = './images/realdrag.gif';
+        ctx.drawImage(dragonImage, x, y); 
+      }
+      dragonFly();
+    
 
       ctx.arc(this.x, this.y, 10, 0, 2 * Math.PI);
       ctx.fillStyle = "black";
@@ -284,6 +269,7 @@ var dy = 2;
       wallWidth = 10;
       wallHeight = 10;
       myObstacles.push(new Component(wallWidth, wallHeight, wallX, 0));
+      myObstacles.push(new Component(dragonFly));
       // board.frames = 2;
     }
     for(var i = 0; i < myObstacles.length; i++){
