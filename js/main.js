@@ -29,15 +29,15 @@ window.onload = function() {
     startGame();
     // drawCannon();
     interval();
+
+   
   };
 
   document.getElementById("restart-button").onclick = function() {
     location.reload();
   };
 
-  // function clearCanvas() {
-  //   ctx.clearRect(0,0,width,height);
-  // }
+ 
 
   function startGame() {
     drawCharacter();  
@@ -46,23 +46,33 @@ window.onload = function() {
      
   }
 
-//   var dragon = {
-//     x: 220,
-//     y: 515,
-//     dWidth: 50,
-//     dHeight: 85,
-    
-// }
 
 
-
-
-
+  // function gameDone(){
+  //   if(character.x >=540){
+  //     alert("you won!");
+  //   }
+  // }
+  
+  
   var character = {
     x: 220,
     y: 515,
     characterWidth: 100,
     characterHeight: 125,
+    
+    
+    gameDone: function(){
+      if((character.x <= 610) && (character.y <= 80)){
+        swal({
+          title: "you Win!!",
+          icon: "success",
+          closeOnEsc: true,
+          
+        });
+    };
+  },
+
     // defined function to move characters
     moveLeft: function(){
       console.log("x in moveLeft before", this.x);
@@ -95,13 +105,15 @@ window.onload = function() {
     moveDown: function(){
       console.log("x in moveRight before", this.x);
       this.y +=10;
-      console.log("x in moveRight after", this.y);
+      console.log("y in moveRight after", this.y);
 
-    }
+    },
 
-    
+   
     
   } //end of character
+
+ 
   console.log("the caracter is: ", character)
 
   function drawCharacter(){
@@ -149,11 +161,7 @@ window.onload = function() {
 
 
 
-// //start location for x and y
-// var x = 400; //= canvas.width/3;
-// var y = 80; //= canvas.height-30;
-// var dx = +2;
-// var dy = 2;
+
 
 
 
@@ -199,8 +207,13 @@ window.onload = function() {
         var dragonImage = new Image();
         dragonImage.src = './images/realdrag.gif';
         ctx.drawImage(dragonImage, x, y); 
+
+        
       }
+      
+      
       dragonFly();
+
     
 
       ctx.arc(this.x, this.y, 10, 0, 2 * Math.PI);
@@ -241,20 +254,14 @@ window.onload = function() {
 
   }// end of component function
 
-   // next three lines regulate score
-   function score(){
-
-     this.ctx.fillStyle="pink";
-     this.ctx.font = "50px Helvetica";
-     this.ctx.fillText("Score: " + board.score, 0, 50);
-
-   }
-
+  
 
   // 5th step => update canvas:
   function updateCanvas(){
+    
     ctx.clearRect(0,0,500,600);
     drawCharacter();
+    
     // drawDragon();
     // Every time we call updateCanvas() we will add 1 to our frames variable
     board.frames ++;
@@ -269,7 +276,8 @@ window.onload = function() {
       wallWidth = 10;
       wallHeight = 10;
       myObstacles.push(new Component(wallWidth, wallHeight, wallX, 0));
-      myObstacles.push(new Component(dragonFly));
+      // myObstacles.push(new Component(dragonFly()));
+      
       // board.frames = 2;
     }
     for(var i = 0; i < myObstacles.length; i++){
@@ -278,7 +286,10 @@ window.onload = function() {
       myObstacles[i].update();
       if(myObstacles[i].crashWith(myObstacles[i]) === true){
         console.log("crash")
-        alert("Ouch!");
+        swal({
+          icon: "error",
+          title: "Game Over!",
+        });
         myObstacles = [];
         board.score = 0;
         board.frames = 0;
@@ -289,5 +300,10 @@ window.onload = function() {
         board.score++;
       }
     }
+    character.gameDone();
   }
-};
+
+
+
+
+};//onload
