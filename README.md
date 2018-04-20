@@ -7,3 +7,7 @@ The purpose of this game is to for the character to move into the castle while a
 # How to play:
 
 use the arrow button on the keyboard to move around.
+
+
+# Play here:
+ https://olaborde.github.io/Citadel-Invasion/
