@@ -14,25 +14,57 @@
   <title>Citadel: Invasion</title>
  
 </head>
-<body>
+<body class="gameBody">
   <div class="container">
       <div class="row">
-          <div class="col-4">
+          
+          <div class="col-4" >
+                <div class="col-12"> <h1> Castle Invasion</h1></div>
+              <!-- Button modal fullscreen -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal-fullscreen">
+        Instructions
+      </button>
+      
+      <!-- Modal fullscreen -->
+      <div class="modal modal-fullscreen fade" id="modal-fullscreen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">Ready to have some fun?</h4>
+            </div>
+            <div class="modal-body content-wrapper">
+              <div class="row l-content-help">
+                      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                          <i class="fa fa-4x fa-download"></i>
+                      </div>
+                      <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                          <p class="content large-text l-text-indent">
+                          Use the arrow button on the keyboard to move around.
+                          </p>
+          
+                      </div>
+                  </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>    
+              <br>
+              <br>
+              <br>
               <div><button id="start-button">Start  Game</button></div>
               <br>
               <br>
               <br>
-              <br>
-              <br>
-              <br>
               <div><button id="restart-button">Reset Game</button></div>
-              
-              
+  
           </div>
 
 
           <div class="col-8">
-              <canvas id="gameCanvas"  width="800" height="690" style="border: 3px solid red;"></canvas>
+              <canvas id="gameCanvas"  width="800" height="690" ></canvas>
           </div>
         </div>
 
@@ -42,6 +74,10 @@
     
   </div>
     
-
+<!-- include jQuery -->
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  
+<!-- include bootstrap -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
